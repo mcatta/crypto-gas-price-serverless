@@ -16,6 +16,6 @@ functions.region('europe-west2')
 /**
  * Check Gas Price
  */
- exports.checkGasPrice = functions.pubsub.schedule('every 1 minutes').onRun((context) => {
+ exports.checkGasPrice = functions.pubsub.schedule('every 5 minutes').onRun((context) => {
     return gasFeeApi.check()
 })
