@@ -18,7 +18,7 @@ jobs:
       - name: Make envfile
         run: |
           touch functions/.env
-#          echo RAPIDAPI_KEY=${{ secrets.RAPIDAPI_KEY }} >> functions/.env
+          echo DEFIPULSE_API_KEY=${{ secrets.DEFIPULSE_API_KEY }} >> functions/.env
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v2
         with:
