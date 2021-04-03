@@ -11,7 +11,7 @@ module.exports = (db) => {
    */
   modules.add = (_data) => {
       // Add dates
-      _data.createdAt = admin.firestore.Timestamp.now()
+      _data.createdAt = firebase.firestore.Timestamp.now()
       let id = uuidv4()
       return HISTORIES_COLLECTION.doc(id).set(_data).then( () => {
           return _data
