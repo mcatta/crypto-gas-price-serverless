@@ -3,6 +3,7 @@ const functions = require("firebase-functions");
 const firebase = require('firebase-admin')
 const express = require('express')
 const cors = require('cors')
+require('dotenv').config()
 firebase.initializeApp()
 const db = firebase.firestore()
 const gasApiApp = express()
@@ -18,7 +19,7 @@ functions.region('europe-west2')
 /**
  * Check Gas Price
  */
-exports.checkGasPrice = functions.pubsub.schedule('every 5 minutes').onRun((context) => {
+exports.checkGasPrice = functions.pubsub.schedule('every ' + process.env.GAS_CHECK_REFRESH_MINUTES + ' minutes').onRun((context) => {
     return gasFeeApi.check()
 })
 
@@ -26,7 +27,7 @@ exports.checkGasPrice = functions.pubsub.schedule('every 5 minutes').onRun((cont
  * Get last 100 records
  */
 gasApiApp.get('/', (req, res) => {
-    gasFeeStore.getAll(100).then( (histories) => {
+    gasFeeStore.getAll((60 * 24) / process.env.GAS_CHECK_REFRESH_MINUTES).then( (histories) => {
         res.json(histories)
     })
 })
