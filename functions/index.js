@@ -13,13 +13,12 @@ gasApiApp.use(cors({ origin: true }))
 const gasFeeStore = require('./gas_fee/gas_fee_store')(db)
 const gasFeeApi = require('./gas_fee/gas_fee_api')(gasFeeStore)
 
-// Region
-functions.region('europe-west2')
+const CHECK = 5
 
 /**
  * Check Gas Price
  */
-exports.checkGasPrice = functions.pubsub.schedule('every ' + process.env.GAS_CHECK_REFRESH_MINUTES + ' minutes').onRun((context) => {
+exports.checkGasPrice = functions.pubsub.schedule('every ' + CHECK + ' minutes').onRun((context) => {
     return gasFeeApi.check()
 })
 
@@ -27,7 +26,7 @@ exports.checkGasPrice = functions.pubsub.schedule('every ' + process.env.GAS_CHE
  * Get last 100 records
  */
 gasApiApp.get('/', (req, res) => {
-    gasFeeStore.getAll((60 * 24) / process.env.GAS_CHECK_REFRESH_MINUTES).then( (histories) => {
+    gasFeeStore.getAll((60 * 24) / CHECK).then( (histories) => {
         res.json(histories)
     })
 })
@@ -42,6 +41,6 @@ gasApiApp.get('/latest', (req, res) => {
 })
 
 /**
- * Exposes client rest API
+ * Exposes client rest API and region
  */
-exports.histories = functions.https.onRequest(gasApiApp);
+exports.histories = functions.region('europe-west2').https.onRequest(gasApiApp);
