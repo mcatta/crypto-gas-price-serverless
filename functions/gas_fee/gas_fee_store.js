@@ -23,7 +23,7 @@ module.exports = (db) => {
      * @param {Integer} _limit records 
      */
     modules.getAll = (_limit) => {
-        return HISTORIES_COLLECTION.orderBy('createdAt', 'desc').limit(_limit).get().then((snapshot) => {
+        return HISTORIES_COLLECTION.orderBy('createdAt', 'desc').limit(parseInt(_limit)).get().then((snapshot) => {
             if (snapshot.empty) {
                 return []
             } else {
