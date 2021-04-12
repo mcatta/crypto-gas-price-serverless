@@ -28,7 +28,7 @@ exports.checkGasPrice = functions.pubsub.schedule('every ' + CHECK + ' minutes')
 gasApiApp.get('/', (req, res) => {
     gasFeeStore.getAll((60 * 24) / CHECK).then( (histories) => {
         // Last 24 hours, but I want to reduce the series to 1/3
-        res.json(histories.filter((item, i) => i % 3 == 0))
+        res.json(histories.reverse().filter((item, i) => i % 3 == 0))
     })
 })
 
