@@ -58,7 +58,7 @@ const validateFirebaseIdToken = async (req, res, next) => {
     }
 
     try {
-        const decodedIdToken = await admin.auth().verifyIdToken(idToken);
+        const decodedIdToken = await firebase.auth().verifyIdToken(idToken);
         functions.logger.log('ID Token correctly decoded', decodedIdToken);
         req.user = decodedIdToken;
         next();
