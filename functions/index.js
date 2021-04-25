@@ -14,7 +14,7 @@ const db = firebase.firestore()
 const gasFeeStore = require('./gas_fee/gas_fee_store')(db)
 const gasFeeApi = require('./gas_fee/gas_fee_api')(gasFeeStore)
 
-const CHECK = 5
+const CHECK = 1
 
 /**
  * Check Gas Price
